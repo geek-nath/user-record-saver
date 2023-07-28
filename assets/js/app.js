@@ -15,32 +15,10 @@ closeModalButton.addEventListener('click', function () {
 
 // get user data on form submit 
 const addUserFormElement = document.querySelector('#addUserForm');
-const userData = [];
+let userData = [];
 
-addUserFormElement.addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const userName = document.querySelector('#user_name').value;
-  const userEmail = document.querySelector('#user_email').value;
-  const userTelNumber = document.querySelector('#user_number').value;
-  const userGender = document.getElementsByName('gender');
-
-  let userGenderValue;
-
-  for (i = 0; i < userGender.length; i++) {
-    if (userGender[i].checked) {
-      userGenderValue = userGender[i].value;
-    }
-  }
-
-  userData.push({
-    name: userName,
-    email: userEmail,
-    telNumber: userTelNumber,
-    gender: userGenderValue,
-    id: Math.random() * 1000
-  });
-
+// display users to browser function
+function displayUsers() {
   // loop through userData array and display it's data on the browser
   const userDataWrapper = document.querySelector('.users_data_wrapper');
 
@@ -76,11 +54,37 @@ addUserFormElement.addEventListener('submit', function (e) {
   });
 
   userDataWrapper.appendChild(userDataElement);
+}
 
-  console.log(userData);
+addUserFormElement.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const userName = document.querySelector('#user_name').value;
+  const userEmail = document.querySelector('#user_email').value;
+  const userTelNumber = document.querySelector('#user_number').value;
+  const userGender = document.getElementsByName('gender');
+
+  let userGenderValue;
+
+  for (i = 0; i < userGender.length; i++) {
+    if (userGender[i].checked) {
+      userGenderValue = userGender[i].value;
+    }
+  }
+
+  userData.push({
+    name: userName,
+    email: userEmail,
+    telNumber: userTelNumber,
+    gender: userGenderValue,
+    id: Math.random() * 1000
+  });
+
+  displayUsers();
+  modalWrapper.classList.add('d-none');
 })
 
 // delete user data function
 function deleteUseData(id) {
-  const deletedUser = userData.filter(user => user.id != id);
+  userData = userData.filter(user => user.id != id);
 }
